@@ -18,7 +18,6 @@ def lambda_handler(event, context):
     event_name = response["Item"]["Evento"]
 
     bucket_name = "xmlrequests"
-    file_name = "tmp_gara.xml"
     s3_path = "test/" + event_name + ".xml"
     
     # Get file XML dal BucketS3 ed estrai le categorie
