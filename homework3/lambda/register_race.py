@@ -13,7 +13,6 @@ def lambda_handler(event, context):
     race_place = event["headers"]["race_place"]
     email = event["headers"]["email"]
     encoded_string = content.encode("utf-8")
-    assert check_xml(content)
     assert headers_validation(race_name, race_date, race_place, email)
     assert check_if_race_exists()
     assert check_if_user_exists()
