@@ -18,6 +18,8 @@ def lambda_handler(event, context):
     assert check_if_user_exists()
     
     # Genero gli identificativi di gara e utente
+    i = {}
+    t = {}
     r = {}
     id = str(id_gen())
     token = token_gen()
@@ -33,6 +35,7 @@ def lambda_handler(event, context):
         'Email': email
     }
     table.put_item(Item=item)
+    r.update({"IdEvento" : id})
     
     # Upload nel DynamoDB del nuovo utente
     table = dynamo.Table('Amministratori')
@@ -41,9 +44,9 @@ def lambda_handler(event, context):
         'Email': email
     }
     table.put_item(Item=item)
+    r.update({"TokenUtente" : token})
     
     # Valori di ritorno
-    r.update({id : token})
     body = json.dumps(r)
     
     return {
