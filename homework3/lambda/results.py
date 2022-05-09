@@ -11,10 +11,10 @@ def lambda_handler(event, context):
     
     # Get nome della gara dal DynamoDB tramite il suo ID
     dynamo = boto3.resource('dynamodb')
-    table = dynamo.Table('ReportGare')
+    table = dynamo.Table('RisultatiGare')
     response = table.get_item(
     Key={
-        'Id': int(id)
+        'Id': id
     })
     event_name = response["Item"]["Evento"]
 
@@ -29,11 +29,10 @@ def lambda_handler(event, context):
     c = {}
     body = "Categoria " + category + " non trovata"
     for child in root.findall("./ClassResult"):
-        if(child.find("./Class/Id").text == category):
-            body = "OK"
+        if(child.find("./Class/Name").text == category):
             for person in child.findall("PersonResult"):
                 i = person.find('Result/Position').text
-                c.update({i : person.find('Person/Name/Given').text})
+                c.update({i : person.find('Person/Name/Family').text})
             #c = dict(sorted(c.items())) ordinamento che funziona male :(
             body = json.dumps(c)
     

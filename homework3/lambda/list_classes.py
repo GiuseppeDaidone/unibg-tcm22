@@ -10,10 +10,10 @@ def lambda_handler(event, context):
     
     # Get nome della gara dal DynamoDB tramite il suo ID
     dynamo = boto3.resource('dynamodb')
-    table = dynamo.Table('ReportGare')
+    table = dynamo.Table('RisultatiGare')
     response = table.get_item(
     Key={
-        'Id': int(id)
+        'Id': id
     })
     event_name = response["Item"]["Evento"]
 

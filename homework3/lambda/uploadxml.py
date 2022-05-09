@@ -29,7 +29,6 @@ def lambda_handler(event, context):
         root = tree.getroot()
         name_root = root.find('Event')
         name_event = name_root.find('Name').text
-        print(id + " " + token)
         name = find_name(id, email)
         if(name == name_event):
             date_event = name_root.find('./StartTime/Date').text
@@ -67,7 +66,9 @@ def lambda_handler(event, context):
         'body': body
     }
     
-def check_xml(content): # Check se rispetta il DTD
+def check_xml(content): # Check se rispetta l'XSD
+    root = ET.fromstring(content)
+    print(root.attrib)
     return True
     
 def headers_validation(id, token): # Check se header non sono vuoti
@@ -86,7 +87,6 @@ def find_user(token): # Cerca se l'utente che sta caricando la gara è presente 
     
 def find_name(id, email): # Cerca se la gara del file XML è già stata registrata
     name = ""
-    print(id)
     dynamo = boto3.resource('dynamodb')
     table = dynamo.Table('GareRegistrate')
     response = table.get_item(

@@ -51,10 +51,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': body
     }
-    
-def check_xml(content): # Check se rispetta il DTD
-    return True
-    
+
 def headers_validation(race_name, race_date, race_place, email): # Check se header non sono vuoti
     return True
     
