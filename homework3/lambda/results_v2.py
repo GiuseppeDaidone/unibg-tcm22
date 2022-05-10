@@ -7,7 +7,7 @@ def lambda_handler(event, context):
     
     content = event["body"]
     id = event['queryStringParameters']['id']
-    category = event['queryStringParameters']['class']
+    org = event['queryStringParameters']['organisation']
     
     # Get nome della gara dal DynamoDB tramite il suo ID
     dynamo = boto3.resource('dynamodb')
@@ -21,21 +21,20 @@ def lambda_handler(event, context):
     bucket_name = "xmlrequests"
     s3_path = "test/" + event_name + ".xml"
     
-    # Get file XML dal BucketS3 ed estrai le categorie
+    # Get file XML dal BucketS3 ed estrai i club
     s3 = boto3.client("s3")
     s3_object = s3.get_object(Bucket=bucket_name, Key=s3_path)
     tree = ET.parse(s3_object['Body'])
     root = tree.getroot()
-    c = {}
-    body = "Categoria " + category + " non trovata"
+    o = {}
+    body = "Il club " + org + " non è stato trovato"
     for child in root.findall("./ClassResult"):
-        if(child.find("./Class/Name").text == category):
-            for person in child.findall("PersonResult"):
-                i = person.find('Result/Position').text
-                c.update({i : person.find('Person/Name/Family').text})
-            # Gli atleti sono inseriti nel file XML per ordine di arrivo, se si volessero ordinare togliere il commento
-            #c = dict(sorted(c.items()))
-            body = json.dumps(c)
+        for person in child.findall("PersonResult"):
+            if(person.find("Organisation/Name").text == org):
+                i = person.find("Person/Id").text
+                f = person.find("Person/Name/Family").text
+                o.update({i : f})
+    body = json.dumps(o)
     
     return {
         'statusCode': 200,
