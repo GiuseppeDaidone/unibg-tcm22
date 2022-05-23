@@ -24,11 +24,10 @@ def lambda_handler(event, context):
     s3_object = s3.get_object(Bucket=bucket_name, Key=s3_path)
     tree = ET.parse(s3_object['Body'])
     root = tree.getroot()
-    categories = {}
+    categories = []
     
     for child in root.iter('Class'):
-        i = child.find('Id').text
-        categories.update({i : child.find('Name').text})
+        categories.append(child.find('Name').text)
     body = json.dumps(categories)
     
     

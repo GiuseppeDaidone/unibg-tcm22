@@ -8,8 +8,8 @@ import './globals.dart';
 import './classes_route.dart';
 
 Future<List<Map<String, dynamic>>> fetchRaces() async {
-  final response = await http.get(Uri.parse(
-      '$apiUrl/list_classes?id=f01448dc-210c-4b7b-8980-2f6f797e37f9'));
+  final response =
+      await http.get(Uri.parse('$apiUrlListRaces/default/list_races'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -65,11 +65,11 @@ class _MyAppState extends State<MyApp> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                ClassesRoute(classes[index]["id"]),
+                                ClassesRoute(classes[index]["Id"]),
                           ),
                         );
                       },
-                      child: Text(classes[index]["race_name"]),
+                      child: Text(classes[index]["RaceName"]),
                     )),
               );
             } else if (snapshot.hasError) {

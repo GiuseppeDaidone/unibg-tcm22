@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     
     resp = table.scan(ProjectionExpression="Id, RaceName, RaceDate, RacePlace")
 
-    body = resp["Items"]
+    body = json.dumps(resp["Items"])
 
     return {
         'statusCode': 200,
