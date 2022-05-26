@@ -64,8 +64,9 @@ class _MyAppState extends State<MyApp> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                ClassesRoute(classes[index]["Id"]),
+                            builder: (context) => ClassesRoute(
+                                classes[index]["Id"],
+                                classes[index]["RaceName"]),
                           ),
                         );
                       },

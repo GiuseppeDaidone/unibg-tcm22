@@ -24,7 +24,8 @@ Future<List<String>> fetchClasses(String raceid) async {
 
 class ClassesRoute extends StatefulWidget {
   final String raceid;
-  const ClassesRoute(this.raceid, {Key? key}) : super(key: key);
+  final String racename;
+  const ClassesRoute(this.raceid, this.racename, {Key? key}) : super(key: key);
 
   @override
   _ClassesRouteState createState() => _ClassesRouteState();
@@ -43,7 +44,19 @@ class _ClassesRouteState extends State<ClassesRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Classes'),
+        title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Classes",
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+              Text(
+                widget.racename,
+                style: TextStyle(color: Colors.white, fontSize: 14.0),
+              ),
+            ]),
       ),
       body: Center(
         child: FutureBuilder<List<String>>(

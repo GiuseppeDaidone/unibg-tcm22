@@ -47,30 +47,45 @@ class _ClassificationRouteState extends State<ClassificationRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Classification'),
+        title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Classification",
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+              Text(
+                widget.c,
+                style: TextStyle(color: Colors.white, fontSize: 14.0),
+              ),
+            ]),
       ),
-      body: RefreshIndicator(
-        onRefresh: _refreshData,
-        child: FutureBuilder<List<String>>(
-          future: futureClasses,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<String> classes = snapshot.data!;
-              return ListView.builder(
-                  itemCount: classes.length,
-                  itemBuilder: ((context, index) => Text(
-                        classes[index],
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.blue.shade900,
-                            fontWeight: FontWeight.bold),
-                      )));
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            // By default, show a loading spinner.
-            return const CircularProgressIndicator();
-          },
+      body: Center(
+        child: RefreshIndicator(
+          onRefresh: _refreshData,
+          child: FutureBuilder<List<String>>(
+            future: futureClasses,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<String> classes = snapshot.data!;
+                return ListView.builder(
+                    itemCount: classes.length,
+                    itemBuilder: ((context, index) => Text(
+                          classes[index],
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blue.shade900,
+                              fontWeight: FontWeight.bold),
+                        )));
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              // By default, show a loading spinner.
+              return const CircularProgressIndicator();
+            },
+          ),
         ),
       ),
     );
