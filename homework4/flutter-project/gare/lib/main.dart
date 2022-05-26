@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Available races'),
+        title: const Text('Races'),
       ),
       body: Center(
         child: FutureBuilder<List<Map<String, dynamic>>>(
