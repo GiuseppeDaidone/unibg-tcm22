@@ -33,9 +33,11 @@ def lambda_handler(event, context):
                 node = person.find("Organisation/Name")
                 if(node.text == org):
                     f = person.find("Person/Name/Family").text
+                    g = person.find("Person/Name/Given").text
                     t = person.find("Result/Time").text
                     p = {}
-                    p.update({"Athlete": f})
+                    p.update({"Name": g})
+                    p.update({"Surname": f})
                     p.update({"Time": t})
                     o.append(p)
             except AttributeError:

@@ -8,14 +8,14 @@ def lambda_handler(event, context):
     id = event['queryStringParameters']['id']
     category = event['queryStringParameters']['class']
     
-    # Get nome della gara dal DynamoDB tramite il suo ID
+    # Get nome della griglia di partenza dal DynamoDB tramite il suo ID
     dynamo = boto3.resource('dynamodb')
-    table = dynamo.Table('RisultatiGare')
+    table = dynamo.Table('GrigliaPartenza')
     response = table.get_item(
     Key={
         'Id': id
     })
-    event_name = response["Item"]["Evento"]
+    event_name = response["Item"]["FileName"]
 
     bucket_name = "xmlrequests"
     s3_path = "test/" + event_name + ".xml"
@@ -27,9 +27,9 @@ def lambda_handler(event, context):
     root = tree.getroot()
     c = []
     body = "Categoria " + category + " non trovata"
-    for child in root.findall("./ClassResult"):
+    for child in root.findall("./ClassStart"):
         if(child.find("./Class/Name").text == category):
-            for person in child.findall("PersonResult"):
+            for person in child.findall("PersonStart"):
                 f = person.find('Person/Name/Family').text
                 g = person.find('Person/Name/Given').text
                 p = f + " " + g
