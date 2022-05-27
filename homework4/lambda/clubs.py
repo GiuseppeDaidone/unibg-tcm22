@@ -6,7 +6,6 @@ import uuid
 def lambda_handler(event, context):
     
     id = event['queryStringParameters']['id']
-    org = event['queryStringParameters']['organisation']
     
     # Get nome della gara dal DynamoDB tramite il suo ID
     dynamo = boto3.resource('dynamodb')
@@ -25,23 +24,18 @@ def lambda_handler(event, context):
     s3_object = s3.get_object(Bucket=bucket_name, Key=s3_path)
     tree = ET.parse(s3_object['Body'])
     root = tree.getroot()
-    o = []
-    body = "Il club " + org + " non è stato trovato"
+    c = []
+    body = ""
     for child in root.findall("./ClassResult"):
         for person in child.findall("PersonResult"):
             try:
-                node = person.find("Organisation/Name")
-                if(node.text == org):
-                    f = person.find("Person/Name/Family").text
-                    t = person.find("Result/Time").text
-                    p = {}
-                    p.update({"Athlete": f})
-                    p.update({"Time": t})
-                    o.append(p)
+                club = person.find("Organisation/Name").text
+                if(club not in c):
+                    c.append(club)
             except AttributeError:
                 continue
-                
-    body = json.dumps(o)
+
+    body = json.dumps(c)
     
     return {
         'statusCode': 200,
