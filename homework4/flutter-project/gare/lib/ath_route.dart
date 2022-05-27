@@ -6,14 +6,14 @@ import 'package:http/http.dart' as http;
 
 import './globals.dart';
 
-Future<List<String>> fetchClasses(String raceid, String c) async {
+Future<List<Map<String, dynamic>>> fetchAth(String raceid, String c) async {
   final response = await http.get(Uri.parse(
-      '$apiUrlListClassification/default/results?id=$raceid&class=$c'));
+      '$apiUrlListAth/default/results_v2?id=$raceid&organisation=$c'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return List<String>.from(jsonDecode(response.body));
+    return List<Map<String, dynamic>>.from(jsonDecode(response.body));
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -21,26 +21,26 @@ Future<List<String>> fetchClasses(String raceid, String c) async {
   }
 }
 
-class ClassificationRoute extends StatefulWidget {
+class AthRoute extends StatefulWidget {
   final String raceid;
   final String c;
-  const ClassificationRoute(this.raceid, this.c, {Key? key}) : super(key: key);
+  const AthRoute(this.raceid, this.c, {Key? key}) : super(key: key);
 
   @override
-  _ClassificationRouteState createState() => _ClassificationRouteState();
+  _AthRouteState createState() => _AthRouteState();
 }
 
-class _ClassificationRouteState extends State<ClassificationRoute> {
-  late Future<List<String>> futureClasses;
+class _AthRouteState extends State<AthRoute> {
+  late Future<List<Map<String, dynamic>>> futureAth;
 
   @override
   void initState() {
     super.initState();
-    futureClasses = fetchClasses(widget.raceid, widget.c);
+    futureAth = fetchAth(widget.raceid, widget.c);
   }
 
   Future<void> _refreshData() async {
-    futureClasses = fetchClasses(widget.raceid, widget.c);
+    futureAth = fetchAth(widget.raceid, widget.c);
   }
 
   @override
@@ -52,7 +52,7 @@ class _ClassificationRouteState extends State<ClassificationRoute> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Classifica",
+                "Atleti - Tempo",
                 style: TextStyle(color: Colors.white, fontSize: 16.0),
               ),
               Text(
@@ -61,22 +61,22 @@ class _ClassificationRouteState extends State<ClassificationRoute> {
               ),
             ]),
       ),
-      body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(8),
-        alignment: Alignment.topCenter,
+      body: Center(
         child: RefreshIndicator(
           onRefresh: _refreshData,
-          child: FutureBuilder<List<String>>(
-            future: futureClasses,
+          child: FutureBuilder<List<Map<String, dynamic>>>(
+            future: futureAth,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<String> classes = snapshot.data!;
+                var aths = snapshot.data!;
                 return ListView.builder(
-                    itemCount: classes.length,
+                    itemCount: aths.length,
                     itemBuilder: ((context, index) => Text(
-                          (index + 1).toString() + ". " + classes[index],
-                          textAlign: TextAlign.start,
+                          aths[index]["Athlete"] +
+                              " - " +
+                              aths[index]["Time"] +
+                              "s",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.blue.shade900,

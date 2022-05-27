@@ -49,7 +49,7 @@ class _ClassesRouteState extends State<ClassesRoute> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Classes",
+                "Categorie",
                 style: TextStyle(color: Colors.white, fontSize: 16.0),
               ),
               Text(
@@ -67,6 +67,9 @@ class _ClassesRouteState extends State<ClassesRoute> {
               return ListView.builder(
                 itemCount: classes.length,
                 itemBuilder: ((context, index) => ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue.shade700, // background
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,

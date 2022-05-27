@@ -4,7 +4,7 @@
 # This file should be version controlled.
 
 version:
-  revision: 496049263e4efd68ced664ee2c90db9c93f08571
+  revision: 4f703c273450a42f7e00d085d8b089a41e13a690
   channel: master
 
 project_type: app
@@ -13,26 +13,26 @@ project_type: app
 migration:
   platforms:
     - platform: root
-      create_revision: 496049263e4efd68ced664ee2c90db9c93f08571
-      base_revision: 496049263e4efd68ced664ee2c90db9c93f08571
+      create_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
+      base_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
     - platform: android
-      create_revision: 496049263e4efd68ced664ee2c90db9c93f08571
-      base_revision: 496049263e4efd68ced664ee2c90db9c93f08571
+      create_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
+      base_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
     - platform: ios
-      create_revision: 496049263e4efd68ced664ee2c90db9c93f08571
-      base_revision: 496049263e4efd68ced664ee2c90db9c93f08571
+      create_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
+      base_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
     - platform: linux
-      create_revision: 496049263e4efd68ced664ee2c90db9c93f08571
-      base_revision: 496049263e4efd68ced664ee2c90db9c93f08571
+      create_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
+      base_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
     - platform: macos
-      create_revision: 496049263e4efd68ced664ee2c90db9c93f08571
-      base_revision: 496049263e4efd68ced664ee2c90db9c93f08571
+      create_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
+      base_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
     - platform: web
-      create_revision: 496049263e4efd68ced664ee2c90db9c93f08571
-      base_revision: 496049263e4efd68ced664ee2c90db9c93f08571
+      create_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
+      base_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
     - platform: windows
-      create_revision: 496049263e4efd68ced664ee2c90db9c93f08571
-      base_revision: 496049263e4efd68ced664ee2c90db9c93f08571
+      create_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
+      base_revision: 4f703c273450a42f7e00d085d8b089a41e13a690
 
   # User provided section
 
