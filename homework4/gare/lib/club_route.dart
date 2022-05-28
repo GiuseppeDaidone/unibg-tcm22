@@ -80,7 +80,7 @@ class _ClubRouteState extends State<ClubRoute> {
                           ),
                         );
                       },
-                      child: Text(clubs[index]),
+                      child: Text("\n" + clubs[index] + "\n"),
                     )),
               );
             } else if (snapshot.hasError) {

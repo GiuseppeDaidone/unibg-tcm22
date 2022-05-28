@@ -52,7 +52,7 @@ class _AthRouteState extends State<AthRoute> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Atleti - Tempo",
+                "Atleti - Categorie - Tempo",
                 style: TextStyle(color: Colors.white, fontSize: 16.0),
               ),
               Text(
@@ -61,7 +61,10 @@ class _AthRouteState extends State<AthRoute> {
               ),
             ]),
       ),
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.topLeft,
         child: RefreshIndicator(
           onRefresh: _refreshData,
           child: FutureBuilder<List<Map<String, dynamic>>>(
@@ -75,10 +78,12 @@ class _AthRouteState extends State<AthRoute> {
                           aths[index]["Surname"] +
                               " " +
                               aths[index]["Name"] +
-                              " - " +
+                              "\n" +
+                              aths[index]["Class"] +
+                              "\n" +
                               aths[index]["Time"] +
-                              "s",
-                          textAlign: TextAlign.center,
+                              "\n",
+                          textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.blue.shade900,

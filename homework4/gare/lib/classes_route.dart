@@ -80,7 +80,7 @@ class _ClassesRouteState extends State<ClassesRoute> {
                           ),
                         );
                       },
-                      child: Text(classes[index]),
+                      child: Text("\n" + classes[index] + "\n"),
                     )),
               );
             } else if (snapshot.hasError) {

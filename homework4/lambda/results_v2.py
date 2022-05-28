@@ -2,6 +2,7 @@ import json
 import xml.etree.ElementTree as ET
 import boto3
 import uuid
+import time
 
 def lambda_handler(event, context):
     
@@ -35,10 +36,15 @@ def lambda_handler(event, context):
                     f = person.find("Person/Name/Family").text
                     g = person.find("Person/Name/Given").text
                     t = person.find("Result/Time").text
+                    c = child.find("Class/Id").text
+                    t = int(t)
+                    ty_res = time.gmtime(t)
+                    res = time.strftime("%H:%M:%S",ty_res)
                     p = {}
                     p.update({"Name": g})
                     p.update({"Surname": f})
-                    p.update({"Time": t})
+                    p.update({"Class": c})
+                    p.update({"Time": res})
                     o.append(p)
             except AttributeError:
                 continue

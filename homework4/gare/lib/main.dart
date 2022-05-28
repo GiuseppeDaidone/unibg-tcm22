@@ -45,6 +45,10 @@ class _MyAppState extends State<MyApp> {
     futureRaces = fetchRaces();
   }
 
+  Future<void> _refreshData() async {
+    futureRaces = fetchRaces();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,42 +56,44 @@ class _MyAppState extends State<MyApp> {
         title: const Text('Gare'),
       ),
       body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(8),
-        alignment: Alignment.topCenter,
-        child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: futureRaces,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var classes = snapshot.data!;
-              return ListView.builder(
-                itemCount: classes.length,
-                itemBuilder: ((context, index) => ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue.shade700, // background
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MenuRoute(
-                                classes[index]["Id"],
-                                classes[index]["RaceName"]),
+          width: double.infinity,
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.topCenter,
+          child: RefreshIndicator(
+            onRefresh: _refreshData,
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: futureRaces,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var classes = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: classes.length,
+                    itemBuilder: ((context, index) => ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue.shade700, // background
                           ),
-                        );
-                      },
-                      child: Text(classes[index]["RaceName"]),
-                    )),
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MenuRoute(
+                                    classes[index]["Id"],
+                                    classes[index]["RaceName"]),
+                              ),
+                            );
+                          },
+                          child: Text("\n" + classes[index]["RaceName"] + "\n"),
+                        )),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
 
-            // By default, show a loading spinner.
-            return const CircularProgressIndicator();
-          },
-        ),
-      ),
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+          )),
     );
   }
 }

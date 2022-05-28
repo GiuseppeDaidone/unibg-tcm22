@@ -75,7 +75,7 @@ class _ClassificationRouteState extends State<ClassificationRoute> {
                 return ListView.builder(
                     itemCount: classes.length,
                     itemBuilder: ((context, index) => Text(
-                          (index + 1).toString() + ". " + classes[index],
+                          (index + 1).toString() + "° " + classes[index],
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               fontSize: 18,
